@@ -3,7 +3,7 @@
 <head><!--Start of head element -->
 	<meta charset="UTF-8">
 	<title>Python Matrix</title>
-	<link href="main.css" rel="stylesheet">
+	<link rel="stylesheet" href="{{ url_for('static', filename='main.css') }}">
 </head><!--End of head element -->
 <body>
 	<header><!--Start of header -->
@@ -12,13 +12,13 @@
 			<area shape="default" coords="20,0 ,270,0, 270,70, 20,70" alt="logo" href="index.html">
 		</map>
 		<nav>
-			<ul class="nav-links">
-				<li><a class="links" href="index.html">Home</a></li>
-				<li><a class="links" href="addPost.html">Create a Post</a></li>
-				<li><a class="links" href="login.html"><button>Login</button></a></li>
-				<li><a class="links" href="signup.html"><button>Sign Up</button></a></li>
-			</ul>
-		</nav>
+				<ul class="nav-links">
+					<li><a href="{{ url_for('index') }}">Home</a></li>
+                    <li><a href="{{ url_for('addPost') }}">Create</a></li>
+					<li><a href="{{ url_for('login') }}">Login</a></li>
+					<li><a href="{{ url_for('sign_up') }}">Sign Up</a></li>
+				</ul>
+			</nav>
 	</header><!--End of header -->
 	<main><!--Start of main -->	
 		<form action='/index.html' method='POST'>
@@ -32,7 +32,7 @@
 					<textarea id="content" name="content" rows="4" cols="50">Content</textarea>
 				</li><br><br>			
 				<li>
-					<label for="cretaedBy">Created By</label>
+					<label for="createdBy">Created By</label>
 					<input type="createdBy" id="createdBy" name="createdBy">
 				</li><br><br>
 			</ul>
@@ -43,8 +43,8 @@
 	<footer>
         <ul>
             <li>© Python Matrix</li>
-            <li><a href="about.html">About Us</a></li>
-            <li><a href="contact.html">Contact</a><li>
+            <li><a href="{{ url_for('aboutUs') }}">About</a></li>
+            <li><a href="{{ url_for('contact') }}">Contact</a><li>
 		</ul>
 	</footer>
 </body>	

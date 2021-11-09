@@ -16,7 +16,7 @@ nav ul li a button{
     text-decoration: none;
     color: black;
     padding: 0px 20px;
-    background-color: rgb(115, 155, 165);
+    background-color: rgb(255, 255, 255);
     border: none;
     border-radius: 50px;
     cursor: pointer;
@@ -24,14 +24,14 @@ nav ul li a button{
 }
 
 nav ul li a{
-    color:rgb(115, 155, 165);
+    color:rgb(255, 255, 255);
     display: inline-block;
     text-decoration: none;
     justify-content:right;
     align-items: right;
 }
 
-nav ul{
+nav links{
     float: right;
     text-align: right;
     padding-left: 60em
@@ -82,7 +82,7 @@ footer ul li{
     font-size:16px;
     padding-left:20px;
     float:left;
-    color:rgb(115, 155, 165);
+    color:rgb(255, 255, 255);
 }
 
 footer ul li a{
@@ -90,7 +90,7 @@ footer ul li a{
     font-size:16px;
     padding-left:20px;
     float:left;
-    color:rgb(115, 155, 165);
+    color:rgb(255, 255, 255);
     text-decoration: none;
 }
 

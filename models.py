@@ -7,14 +7,16 @@ class Post(db.Model):
     title = db.Column("title", db.String(200))
     text = db.Column("text", db.String(100))
     date = db.Column("date", db.String(50))
-    comments = db.relationship("Comment", backref="user", cascade="all, delete-orphan", lazy=True)
+    name = db.Column("name", db.String(100))
+    # comments = db.relationship("Comment", backref="user", cascade="all, delete-orphan", lazy=True)
     # can create a foreign key; referencing the id variable in the User class, so that is why it is lowercase u
     user_id = db.Column(db.Integer, db.ForeignKey("user.id"), nullable=False)
 
-    def __init__(self, title, text, date, user_id):
+    def __init__(self, title, text, date, name, user_id):
         self.title = title
         self.text = text
         self.date = date
+        self.name = name
         self.user_id = user_id
 
 
@@ -23,16 +25,12 @@ class User(db.Model):
     first_name = db.Column("first_name", db.String(100))
     last_name = db.Column("last_name", db.String(100))
     email = db.Column("email", db.String(100))
-    password = db.Column(db.String(255), nullable=False)
-    registered_on = db.Column(db.DateTime, nullable=False)
-    notes = db.relationship("Note", backref="user", lazy=True)
-    comments = db.relationship("Comment", backref="user", lazy=True)
 
-    def __init__(self, first_name, last_name, email, password):
+    # password = db.Column(db.String(255), nullable=False)
+    # registered_on = db.Column(db.DateTime, nullable=False)
+    # notes = db.relationship("Note", backref="user", lazy=True)
+    # comments = db.relationship("Comment", backref="user", lazy=True)
+
+    def __init__(self, first_name, last_name):
         self.first_name = first_name
         self.last_name = last_name
-        self.email = email
-        self.password = password
-        self.registered_on = datetime.date.today()
-
-

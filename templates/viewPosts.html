@@ -15,16 +15,40 @@
 				<ul class="nav-links">
 					<li><a href="{{ url_for('index') }}">Home</a></li>
                     <li><a href="{{ url_for('addPost') }}">Create</a></li>
-					<li><a href="{{ url_for('post') }}">View Posts</a></li>
 					<li><a href="{{ url_for('login') }}">Login</a></li>
 					<li><a href="{{ url_for('sign_up') }}">Sign Up</a></li>
 				</ul>
 			</nav>
 	</header><!--End of header -->
-	<main><!--Start of main -->	
+
 	<h1>Welcome {{user.first_name}} to Python Matrix Q&A Forum</h1>
-	</main><!--End of main -->
-	
+		<h2>Listing Posts</h2>
+		<table>
+      <tr>
+        <th>Title</th>
+		<th>Text</th>
+        <th>Date</th>
+		<th>Name</th>
+      </tr>
+			{% for note in notes %}
+      			<tr>
+        			<td>
+						<a href="{{ url_for('get_note', note_id=note.id) }}">{{note.title}}</a>
+        			</td>
+					<td>{{note.date}}</td>
+        <!--<td>
+			<tr>
+        <td>
+          {{posts.title}}
+        </td>
+		<td>{{posts.text}}</td>
+        <td>{{posts.date}}</td>
+		<td>{{posts.name}}</td>
+			</tr>-->
+			{% endfor %}
+		</table>
+
+
 	<footer>
         <ul>
             <li>© Python Matrix</li>
@@ -32,5 +56,5 @@
             <li><a href="{{ url_for('contact') }}">Contact</a><li>
 		</ul>
 	</footer>
-</body>	
+</body>
 </html>

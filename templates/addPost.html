@@ -21,7 +21,7 @@
 			</nav>
 	</header><!--End of header -->
 	<main><!--Start of main -->	
-		<form action='/index.html' method='POST'>
+		<form action="{{ url_for('post')}}" method="post">
 			<ul>
 				<li>
 					<label for="title">Title</label>
@@ -36,8 +36,9 @@
 					<input type="createdBy" id="createdBy" name="createdBy">
 				</li><br><br>
 			</ul>
+			<input class="submit1" type="submit" value="Add Post">
 		</form><br><br>
-		<input class="submit1" type="submit" value="Post">
+
 	</main><!--End of main -->
 	
 	<footer>

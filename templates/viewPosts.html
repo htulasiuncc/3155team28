@@ -15,46 +15,37 @@
 				<ul class="nav-links">
 					<li><a href="{{ url_for('index') }}">Home</a></li>
                     <li><a href="{{ url_for('addPost') }}">Create</a></li>
-					<li><a href="{{ url_for('login') }}">Login</a></li>
-					<li><a href="{{ url_for('sign_up') }}">Sign Up</a></li>
+                    <li><a href="{{ url_for('logout') }}">Logout</a></li>
 				</ul>
 			</nav>
 	</header><!--End of header -->
 
-	<h1>Welcome {{user.first_name}} to Python Matrix Q&A Forum</h1>
+	<h1>Welcome {{user}} to Python Matrix Q&A Forum</h1>
 		<h2>Listing Posts</h2>
 		<table>
       <tr>
         <th>Title</th>
-		<th>Text</th>
         <th>Date</th>
-		<th>Name</th>
       </tr>
-			{% for note in notes %}
-      			<tr>
-        			<td>
-						<a href="{{ url_for('get_note', note_id=note.id) }}">{{note.title}}</a>
-        			</td>
-					<td>{{note.date}}</td>
-        <!--<td>
-			<tr>
+      {% for post in posts %}
+      <tr>
         <td>
-          {{posts.title}}
+          <a href="{{ url_for('get_post', post_id=post.id) }}">{{post.title}}</a>
         </td>
-		<td>{{posts.text}}</td>
-        <td>{{posts.date}}</td>
-		<td>{{posts.name}}</td>
-			</tr>-->
-			{% endfor %}
-		</table>
+        <td>{{post.date}}</td>
+        <td>
+          <a href="{{ url_for('update_post', post_id=post.id) }}">Edit</a>
+        </td>
+        <td>
+          <form action="{{ url_for('delete_post', post_id=post.id) }}" method="POST">
+            <input type="submit" value="Delete" />
+          </form>
+        </td>
+      </tr>
+      {% endfor %}
+    </table>
 
 
-	<footer>
-        <ul>
-            <li>© Python Matrix</li>
-            <li><a href="{{ url_for('aboutUs') }}">About</a></li>
-            <li><a href="{{ url_for('contact') }}">Contact</a><li>
-		</ul>
-	</footer>
+
 </body>
 </html>

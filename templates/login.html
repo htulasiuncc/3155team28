@@ -4,6 +4,7 @@
 	<meta charset="UTF-8">
 	<title>Python Matrix</title>
 	<link rel="stylesheet" href="{{ url_for('static', filename='main.css') }}">
+	<link rel="stylesheet" href="{{ url_for('static', filename='forms.css') }}">
 </head><!--End of head element -->
 <body>
 	<header><!--Start of header -->
@@ -11,37 +12,47 @@
 		<map name="logo">
 			<area shape="default" coords="20,0 ,270,0, 270,70, 20,70" alt="logo" href="index.html">
 		</map>
-		<nav>
-				<ul class="nav-links">
-					<li><a href="{{ url_for('index') }}">Home</a></li>
-                    <li><a href="{{ url_for('addPost') }}">Create</a></li>
-					<li><a href="{{ url_for('login') }}">Login</a></li>
-					<li><a href="{{ url_for('sign_up') }}">Sign Up</a></li>
-				</ul>
-			</nav>
-	</header><!--End of header -->
-	<main><!--Start of main -->	
-		<form action='/index.html' method='POST'>
-			<ul>
-				<li>
-					<label for="username">Username</label>
-					<input type="text" id="username" name="username">
-				</li><br><br>
-				<li>
-					<label for="password">Password</label>
-					<input type="text" id="password" name="password">
-				</li><br><br>
-			</ul>
-		</form><br><br>
-		<input class="submit1" type="submit" value="Login">
-	</main><!--End of main -->
+		<div class="navdiv">
+            {% if user %}
+            <nav>
+                <a href="{{ url_for('logout') }}">Logout</a>
+            </nav>
+        {% else %}
+            <nav>
+                <a href="{{ url_for('login') }}">Sign In</a>
+                <a href="{{ url_for('register') }}">Register</a>
+            </nav>
+        {% endif %}
+        </div>
+
+        <h1>Welcome {% if user %}{{user}}{% endif %}to the 49er Notes App!</h1>
+
+        <h2>Use this site to maintain and organize your notes.</h2>
+        <div class="formwrapper">
+            <h2 class="title">Login</h2>
+            <form method="POST" action="/login">
+                <div class="form-field">{{ form.email.label }} {{ form.email }}
+                    {% if form.email.errors %}
+                    <ul class="errors">
+                        {% for error in form.email.errors %}
+                        <li>{{ error }}</li>
+                        {% endfor %}
+                    </ul>
+                    {% endif %}
+                </div>
+                <div class="form-field">{{ form.password.label }} {{ form.password }}
+                    {% if form.password.errors %}
+                    <ul class="errors">
+                        {% for error in form.password.errors %}
+                        <li>{{ error }}</li>
+                        {% endfor %}
+                    </ul>
+                    {% endif %}
+                </div>
+                {{ form.submit }}
+            </form>
+        </div>
 	
-	<footer>
-        <ul>
-            <li>© Python Matrix</li>
-            <li><a href="{{ url_for('aboutUs') }}">About</a></li>
-            <li><a href="{{ url_for('contact') }}">Contact</a><li>
-		</ul>
-	</footer>
+
 </body>	
 </html>

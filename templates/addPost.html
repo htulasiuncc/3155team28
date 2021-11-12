@@ -7,15 +7,17 @@
 </head><!--End of head element -->
 <body>
 	<header><!--Start of header -->
-		<img class="logo" src="logo.jpg" width="" height="" alt="logo">
+		<img class="logo" src="{{ url_for('static', filename='logo.jpg') }}" width="" height="" alt="logo">
 		<map name="logo">
 			<area shape="default" coords="20,0 ,270,0, 270,70, 20,70" alt="logo" href="index.html">
 		</map>
 		<nav>
-            <a href="{{ url_for('index')}}">Home</a> ||
-            <a href="{{ url_for('get_posts')}}">My Posts</a> ||
-            <a href="{{ url_for('addPost')}}">Add Post</a>
-            <a href="{{ url_for('logout') }}">Logout</a>
+            <ul class="nav-links">
+                <li><a class="links" href="{{ url_for('index')}}">Home</a></li>
+                <li><a class="links" href="{{ url_for('get_posts')}}">My Posts</a></li>
+                <li><a class="links" href="{{ url_for('addPost')}}">Create</a></li>
+                <li><a class="links" href="{{ url_for('logout') }}">Logout</a></li>
+            </ul>
         </nav>
 
 
@@ -24,33 +26,35 @@
 
         <h1>Welcome {{user}} to Python Matrix Q&A Forum</h1>
         {% if post %}
-        <form action="{{url_for('update_post', post_id=post.id) }}" method="post">
+        <form class="form1" action="{{url_for('update_post', post_id=post.id) }}" method="post">
         {% else %}
-            <form action="addPost" method="post">
+            <form class="form1" action="addPost" method="post">
         {% endif %}
-           <p><label>Title </label></p>
-            <p><input type="text" name="title" value= "{% if post %} {{post.title}} {% endif %}"/></p>
-            <p><label>Post </label></p>
-            <p>
-                <textarea name="postText"  rows="6" cols="0" >
-                    {% if post %}
-                        {{post.text}}
-                    {% else %}
-                        Add your new Post here ...
-                    {% endif %}
-
-                </textarea>
-            </p>
-            <p>
-                {% if post %}
-                    <input type="submit" value="Update Post"/>
-                {% else %}
-                    <input type="submit" value="Add Post"/>
-                {% endif %}
-            </p>
+                <ul>
+                   <li>
+                       <label for="'title">Title</label>
+                        <input id="title" type="text" name="title" value= "{% if post %} {{post.title}} {% endif %}"/>
+                   </li><br><br>
+                    <li><label for="content">Content</label>
+                        <textarea id="content" name="postText"  rows="6" cols="35" >{% if post %}{{post.text}}{% else %}Content{% endif %}</textarea>
+                    </li><br><br>
+                    <li>
+                        {% if post %}
+                            <input class="submit1" type="submit" value="Update Post"/>
+                        {% else %}
+                            <input class="submit1" type="submit" value="Add Post"/>
+                        {% endif %}
+                    </li>
+                </ul>
         </form>
 
-
+    <footer>
+            <ul>
+                <li>© Python Matrix</li>
+                <li><a href="{{ url_for('about') }}">About</a></li>
+            <li><a href="{{ url_for('contact') }}">Contact</a><li>
+            </ul>
+        </footer>
 
 	
 

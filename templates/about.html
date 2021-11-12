@@ -7,7 +7,7 @@
 </head><!--End of head element -->
 <body>
 	<header><!--Start of header -->
-		<img class="logo" src="logo.jpg" width="" height="" alt="logo">
+		<img class="logo" src="{{ url_for('static', filename='logo.jpg') }}" width="" height="" alt="logo">
 		<map name="logo">
 			<area shape="default" coords="20,0 ,270,0, 270,70, 20,70" alt="logo" href="index.html">
 		</map>
@@ -16,18 +16,22 @@
 					<li><a href="{{ url_for('index') }}">Home</a></li>
                     <li><a href="{{ url_for('addPost') }}">Create</a></li>
 					<li><a href="{{ url_for('login') }}">Login</a></li>
-					<li><a href="{{ url_for('sign_up') }}">Sign Up</a></li>
+					<li><a href="{{ url_for('register') }}">Register</a></li>
 				</ul>
 			</nav>
 	</header><!--End of header -->
 	<main><!--Start of main -->	
-	<h1>Hello</h1>
+	<h1>Creators</h1>
+		<h2>Swet Panchal</h2>
+		<h2>Mohammad Naeem</h2>
+		<h2>Hima Tulasi</h2>
+		<h2>Himanshu Makadiya</h2>
 	</main><!--End of main -->
 	
 	<footer>
         <ul>
             <li>© Python Matrix</li>
-            <li><a href="{{ url_for('aboutUs') }}">About</a></li>
+            <li><a href="{{ url_for('about') }}">About</a></li>
             <li><a href="{{ url_for('contact') }}">Contact</a><li>
 		</ul>
 	</footer>

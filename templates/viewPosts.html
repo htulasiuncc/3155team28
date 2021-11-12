@@ -7,15 +7,15 @@
 </head><!--End of head element -->
 <body>
 	<header><!--Start of header -->
-			<img class="logo" src="logo.jpg" width="" height="" alt="logo">
+			<img class="logo" src="{{ url_for('static', filename='logo.jpg') }}" width="" height="" alt="logo">
 			<map name="logo">
                 <area shape="default" coords="20,0 ,270,0, 270,70, 20,70" alt="logo" href="index.html">
             </map>
 			<nav>
 				<ul class="nav-links">
-					<li><a href="{{ url_for('index') }}">Home</a></li>
-                    <li><a href="{{ url_for('addPost') }}">Create</a></li>
-                    <li><a href="{{ url_for('logout') }}">Logout</a></li>
+					<li><a class="links" href="{{ url_for('index') }}">Home</a></li>
+                    <li><a class="links" href="{{ url_for('addPost') }}">Create</a></li>
+                    <li><a class="links" href="{{ url_for('logout') }}">Logout</a></li>
 				</ul>
 			</nav>
 	</header><!--End of header -->
@@ -24,7 +24,7 @@
 		<h2>Listing Posts</h2>
 		<table>
       <tr>
-        <th>Title</th>
+        <th>Title</th><br>
         <th>Date</th>
       </tr>
       {% for post in posts %}
@@ -34,18 +34,27 @@
         </td>
         <td>{{post.date}}</td>
         <td>
-          <a href="{{ url_for('update_post', post_id=post.id) }}">Edit</a>
+          <a href="{{ url_for('update_post', post_id=post.id) }}"><button>Edit</button></a>
         </td>
         <td>
+            <div class="form2">
           <form action="{{ url_for('delete_post', post_id=post.id) }}" method="POST">
-            <input type="submit" value="Delete" />
+            <input class="submit3" type="submit" value="Delete" />
           </form>
+                </div>
         </td>
       </tr>
       {% endfor %}
     </table>
 
-
+    <footer>
+        <ul>
+            <li>© Python Matrix</li>
+            <li><a href="{{ url_for('about') }}">About</a></li>
+            <li><a href="{{ url_for('contact') }}">Contact</a><li>
+		</ul>
+	</footer>
 
 </body>
+
 </html>

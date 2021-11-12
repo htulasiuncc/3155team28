@@ -58,6 +58,10 @@ nav nav-inks li a{
     transition: all 0.3s ease 0s;
 }
 
+nav nav-inks li links button{
+    transition: all 0.3s ease 0s;
+}
+
 nav nav-links li a:hover{
     transition: all 0.3s ease 0s;
 }
@@ -106,6 +110,16 @@ form {
     border: 1px solid #CCC;
     border-radius: 3em;
     color: black;
+    border-style: solid;
+}
+
+.form2 form {
+    margin: 0;
+    width: 0%;
+    padding: 0em;
+    border: none;
+    color: none;
+
 }
 
 form ul {
@@ -129,6 +143,7 @@ input, textarea {
     width: 300px;
     box-sizing: border-box;
     border: 1px solid #999;
+    vertical-align: top;
 }
 
 input:focus, textarea:focus {
@@ -147,10 +162,13 @@ input:focus, textarea:focus {
         border-radius: 10px;
         cursor: pointer;
         transition: all 0.3s ease 0s;
-        margin-left: 39em;
+        margin-left: 6em;
 
 }
+
+
 
 form ul li label{
     font-size: 18px;
 }
+

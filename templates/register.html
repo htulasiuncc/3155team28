@@ -7,23 +7,30 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='forms.css') }}">
 </head>
     <body>
-        <div class="navdiv">
-
+    <header>
+        <img class="logo" src="{{ url_for('static', filename='logo.jpg') }}" width="" height="" alt="logo">
+		<map name="logo">
+			<area shape="default" coords="20,0 ,270,0, 270,70, 20,70" alt="logo" href="index.html">
+		</map>
             {% if user %}
             <nav>
-                <a href="{{ url_for('logout') }}">Logout</a>
+                <ul  class="nav-links">
+                    <li><a class="links" href="{{ url_for('logout') }}"><button>Logout</button></a></li>
+                </ul>
             </nav>
         {% else %}
             <nav>
-                <a href="{{ url_for('login') }}">Sign In</a>
-                <a href="{{ url_for('register') }}">Register</a>
+                <ul class=""nav-links>
+                    <li><a class="links" href="{{ url_for('login') }}"><button>Sign In</button></a></li>
+                    <li><a class="links" href="{{ url_for('register') }}"><button>Register</button></a></li>
+                </ul>
             </nav>
         {% endif %}
 
-        </div>
-        <h1>Welcome {% if user %}{{user}}{% endif %}to the 49er Chatting App!</h1>
+    </header>
+        <h1>Welcome {% if user %}{{user}}{% endif %}to the Python Matrix Posts App!</h1>
 
-        <h2>Use this site to maintain and organize your posts.</h2>
+        <h2>Use this site to maintain and organize your Posts.</h2>
         <div class="formwrapper">
             <h2 class="title">Register</h2>
             <form method="POST" action="/register">
@@ -76,5 +83,14 @@
             </form>
 
         </div>
+        <footer>
+            <ul>
+                <li>© Python Matrix</li>
+                <li><a href="{{ url_for('about') }}">About</a></li>
+            <li><a href="{{ url_for('contact') }}">Contact</a><li>
+            </ul>
+        </footer>
     </body>
+
+
 </html>

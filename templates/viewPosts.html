@@ -33,6 +33,7 @@
           <a href="{{ url_for('get_post', post_id=post.id) }}">{{post.title}}</a>
         </td>
         <td>{{post.date}}</td>
+        <td>Views - {{post.view_count}}</td>
         <td>
           <a href="{{ url_for('update_post', post_id=post.id) }}"><button>Edit</button></a>
         </td>

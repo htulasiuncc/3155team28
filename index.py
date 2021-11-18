@@ -41,8 +41,9 @@ with app.app_context():
 @app.route('/')
 @app.route('/index')
 def index():
+    my_posts = db.session.query(Post).all()
     if session.get('user'):
-        return render_template('index.html', user=session['user'])
+        return render_template('index.html', user=session['user'], posts=my_posts)
     return render_template("index.html")
 
 @app.route('/contact')
@@ -68,6 +69,12 @@ def get_posts():
 def get_post(post_id):
     my_post = db.session.query(Post).filter_by(id=post_id).one()
 
+    count = my_post.view_count
+    my_post.view_count = count + 1
+
+    db.session.add(my_post)
+    db.session.commit()
+
     # create a comment form object
     form = CommentForm()
     return render_template('viewPost.html', post=my_post, user=session['user'], form=form)
@@ -81,11 +88,12 @@ def addPost():
 
             title = request.form['title']
             text = request.form['postText']
+            count = 0
 
             from datetime import date
             today = date.today()
             today = today.strftime("%m-%d-%Y")
-            new_record = Post(title, text, today, session['user_id'])
+            new_record = Post(title, text, today, count, session['user_id'])
             db.session.add(new_record)
             db.session.commit()
             return redirect(url_for('get_posts'))

@@ -7,16 +7,20 @@ class Post(db.Model):
     title = db.Column("title", db.String(200))
     text = db.Column("text", db.String(100))
     date = db.Column("date", db.String(50))
+    view_count = db.Column(db.Integer, primary_key=False)
     # can create a foreign key: referencing the id variable in the User class,
     # so that is why it is lowerase u
     user_id = db.Column(db.Integer, db.ForeignKey("user.id"), nullable=False)
+
     comments = db.relationship("Comment", backref="post", cascade="all, delete-orphan", lazy=True)
 
-    def __init__(self, title, text, date, user_id):
+    def __init__(self, title, text, date, view_count, user_id):
         self.title = title
         self.text = text
         self.date = date
+        self.view_count = view_count
         self.user_id = user_id
+
 
 
 class User(db.Model):

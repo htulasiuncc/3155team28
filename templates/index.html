@@ -30,8 +30,29 @@
             </nav>
         {% endif %}
 	</header><!--End of header -->
-	<main><!--Start of main -->	
+	<main><!--Start of main -->
 	<h1>Welcome {{user}} to Python Matrix Q&A Forum</h1>
+
+        {% if(user) %}
+            <h2>Listing Posts</h2>
+
+            <table>
+              <tr>
+                <th>Title</th><br>
+                <th>Date</th>
+              </tr>
+              {% for post in posts %}
+              <tr>
+                <td>
+                  <a href="{{ url_for('get_post', post_id=post.id) }}">{{post.title}}</a>
+                </td>
+                <td>{{post.date}}</td>
+
+
+              </tr>
+              {% endfor %}
+            </table>
+        {% endif %}
 	</main><!--End of main -->
 	<footer>
         <ul>
@@ -41,5 +62,5 @@
 		</ul>
 	</footer>
 
-</body>	
+</body>
 </html>

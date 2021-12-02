@@ -24,29 +24,20 @@
 	</header>
 
 
-        <h1>Welcome {{user}} to Python Matrix Q&A Forum</h1>
-        {% if post %}
-        <form class="form1" action="{{url_for('update_post', post_id=post.id) }}" method="post">
-        {% else %}
-            <form class="form1" action="addPost" method="post">
-        {% endif %}
+        <h1 class="welcome" >Welcome {{user}} to Python Matrix Q&A Forum</h1>
+
+        <form class="form1" action="report" method="post">
+
                 <ul>
                    <li>
-                       <label for="'title">Title</label>
-                        <input id="title" type="text" name="title" value= "{% if post %} {{post.title}} {% endif %}"/>
+                        <label for="issue">Issue</label>
+                        <input id="issue" type="text" name="issue" value= "{% if report %} {{report.issue}} {% endif %}"/>
                    </li><br><br>
                     <li><label for="content">Content</label>
-                        <textarea id="content" name="postText"  rows="6" cols="35" >{% if post %}{{post.text}}{% else %}Content{% endif %}</textarea>
+                        <textarea id="content" name="content"  rows="6" cols="35" >{% if report %}{{report.content}}{% else %}Content{% endif %}</textarea>
                     </li><br><br>
-                    <li><label for="img">Add Image Here</label>
-                        <textarea id="img" name="img" >{% if post %}{{post.img}}{% else %}Add Image{% endif %}</textarea>
-                    </li>
                     <li>
-                        {% if post %}
-                            <input class="submit1" type="submit" value="Update Post"/>
-                        {% else %}
-                            <input class="submit1" type="submit" value="Add Post"/>
-                        {% endif %}
+                            <input class="submit1" type="submit" value="Submit Report"/>
                     </li>
                 </ul>
         </form>
@@ -55,9 +46,9 @@
             <ul>
                 <li>© Python Matrix</li>
                 <li><a href="{{ url_for('about') }}">About</a></li>
-                <li><a href="{{ url_for('contact') }}">Contact</a><li>
+            <li><a href="{{ url_for('contact') }}">Contact</a><li>
             </ul>
-    </footer>
+        </footer>
 
 
 

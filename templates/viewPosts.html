@@ -7,9 +7,9 @@
 </head><!--End of head element -->
 <body>
 	<header><!--Start of header -->
-			<img class="logo" src="{{ url_for('static', filename='logo.jpg') }}" width="" height="" alt="logo">
+			<img class="logo" usemap="#logo"  src="{{ url_for('static', filename='logo.jpg') }}" width="" height="" alt="logo">
 			<map name="logo">
-                <area shape="default" coords="20,0 ,270,0, 270,70, 20,70" alt="logo" href="index.html">
+                <area shape="default" coords="30,20 ,210,20, 210,90, 30,90" alt="logo" href="{{ url_for('index') }}">
             </map>
 			<nav>
 				<ul class="nav-links">
@@ -20,9 +20,9 @@
 			</nav>
 	</header><!--End of header -->
 
-	<h1>Welcome {{user}} to Python Matrix Q&A Forum</h1>
-		<h2>Listing Posts</h2>
-		<table>
+	<h1 class="welcome">Welcome {{user}} to Python Matrix Q&A Forum</h1>
+		<h2 class="welcome2">Listing Posts</h2>
+		<!--<table>
       <tr>
         <th>Title</th><br>
         <th>Date</th>
@@ -46,7 +46,26 @@
         </td>
       </tr>
       {% endfor %}
-    </table>
+    </table>-->
+
+    {% for post in posts %}
+
+        <a class="a2" href="{{ url_for('get_post', post_id=post.id) }}">{{post.title}}</a><br>
+        <div class="a2">Created on:{{post.date}}<br>View Count-{{ post.view_count }}</div>
+
+        <table>
+          <td><a class="a2" href="{{ url_for('update_post', post_id=post.id) }}"><button id="editButton">Edit</button></a></td>
+          <td><div class="form2">
+                <form action="{{ url_for('delete_post', post_id=post.id) }}" method="POST">
+                  <input id="deleteButton" class="submit3" type="submit" value="Delete" />
+                </form>
+            </div>
+          </td>
+<!--            <td>-->
+<!--                <img src="{{ post.img }}" class = "img">-->
+<!--            </td>-->
+      </table><br>
+	{% endfor %}
 
     <footer>
         <ul>

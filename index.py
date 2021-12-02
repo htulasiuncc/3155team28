@@ -9,6 +9,7 @@ from flask import session
 import bcrypt
 from database import db
 from models import Post as Post
+from models import Report as Report
 from models import User as User
 from models import Comment as Comment
 from forms import RegisterForm, CommentForm
@@ -48,11 +49,11 @@ def index():
 
 @app.route('/contact')
 def contact():
-    return render_template("contact.html")
+    return render_template("contact.html", user=session['user'])
 
 @app.route('/about')
 def about():
-    return render_template("about.html")
+    return render_template("about.html", user=session['user'])
 
 
 @app.route('/viewPosts')
@@ -88,12 +89,14 @@ def addPost():
 
             title = request.form['title']
             text = request.form['postText']
+            img = request.form['img']
             count = 0
+            count_1 = 0
 
             from datetime import date
             today = date.today()
             today = today.strftime("%m-%d-%Y")
-            new_record = Post(title, text, today, count, session['user_id'])
+            new_record = Post(title, text, img, today, count, count_1, session['user_id'])
             db.session.add(new_record)
             db.session.commit()
             return redirect(url_for('get_posts'))
@@ -111,10 +114,12 @@ def update_post(post_id):
             # get title data
             title = request.form['title']
             text = request.form['postText']
+            img = request.form['img']
             post = db.session.query(Post).filter_by(id=post_id).one()
 
             post.title = title
             post.text = text
+            post.img = img
 
             db.session.add(post)
             db.session.commit()
@@ -217,6 +222,35 @@ def new_comment(post_id):
             db.session.commit()
 
         return redirect(url_for('get_post', post_id=post_id))
+
+    else:
+        return redirect(url_for('login'))
+
+
+@app.route('/viewPost/<post_id>/report', methods=['POST', 'GET'])
+def report_post(post_id):
+    if session.get('user'):
+        my_post = db.session.query(Post).filter_by(id=post_id).one()
+
+        count = my_post.report_count
+        my_post.report_count = count + 1
+        if my_post.report_count < 3:
+            if request.method == 'POST':
+
+                issue = request.form['issue']
+                content = request.form['content']
+                new_record = Report(issue, content, int(post_id), session['user_id'])
+                db.session.add(new_record)
+                db.session.commit()
+                count += 1
+                print(count)
+                return redirect(url_for('get_post', post_id=post_id))
+            else:
+                return render_template('report.html', user=session['user'])
+        else:
+            db.session.delete(my_post)
+            db.session.commit()
+            return redirect(url_for('index'))
 
     else:
         return redirect(url_for('login'))

@@ -7,9 +7,9 @@
 </head><!--End of head element -->
 <body>
    <header><!--Start of header -->
-         <img class="logo" src="{{ url_for('static', filename='logo.jpg') }}" width="" height="" alt="logo">
-         <map name="logo">
-                <area shape="default" coords="20,0 ,270,0, 270,70, 20,70" alt="logo" href="index.html">
+         <img class="logo" usemap="#logo"  src="{{ url_for('static', filename='logo.jpg') }}" width="" height="" alt="logo">
+			<map name="logo">
+                <area shape="default" coords="30,20 ,210,20, 210,90, 30,90" alt="logo" href="{{ url_for('index') }}">
             </map>
          <nav>
             <ul class="nav-links">
@@ -20,9 +20,9 @@
          </nav>
    </header><!--End of header -->
 
-   <h1>Welcome {{user}} to Python Matrix Q&A Forum</h1>
-      <h2>Listing Posts</h2>
-      <table>
+   <h1 class="welcome">Welcome {{user}} to Python Matrix Q&A Forum</h1>
+      <h2 class="welcome2">Listing Posts</h2>
+      <!--<table>
             <tr>
                 <th>Title</th>
                 <th>Text</th>
@@ -33,28 +33,44 @@
                 <td>{{post.text}}</td>
                 <td>{{post.date}}</td>
             </tr>
-        </table>
+        </table>-->
 
+        <div class="a2"><b>Title:</b> {{post.title}}</div>
+        <div class="a2"><b>Content:</b> {{post.text}}</div>
+        <div class="a2"><b>Created on:</b> {{post.date}}</div>
+            <tr>
+                <img src="{{ post.img }}" class = "img">
+            </tr>
         {% if post.comments %}
   {% if post.comments|length > 0 %}
-    <h2>Comments</h2>
-    <ul>
+    <h2 class="welcome2">Comments</h2>
+    <ul class="a3">
+
     {% for comment in post.comments %}
-      <li>{{ comment.content }}</li>
+      <li>{{ comment.content }} - {{comment.user.first_name}}</li><br><br>
     {% endfor %}
+
     </ul>
   {% endif %}
 {% endif %}
+<div class="form2">
 <form action="{{ url_for('new_comment', post_id=post.id) }}" method="post">
   <div class="formwrapper">
-    <h2 class="title">Add a comment</h2>
+    <h2 class="welcome2">Add&nbspa&nbspcomment</h2>
     <div class="form-field">
       {{ form.comment.label }} <br/> {{ form.comment }}
     </div>
-    {{ form.submit }}
+    <div class="commentSubmit">
+      {{ form.submit }}
+    </div>
   </div>
 </form>
-<h2>View Count-{{ post.view_count }}</h2>
+</div>
+
+<h2 class="welcome2">View Count-{{ post.view_count }}</h2>
+
+   <a href="{{ url_for('report_post', post_id=post.id) }}" method="POST"><button class="reportButton">Report</button></a>
+
 <footer>
         <ul>
             <li>© Python Matrix</li>
@@ -63,6 +79,6 @@
 		</ul>
 	</footer>
 
-
 </body>
+
 </html>

@@ -7,9 +7,9 @@
 </head><!--End of head element -->
 <body>
 	<header><!--Start of header -->
-			<img class="logo" src="{{ url_for('static', filename='logo.jpg') }}" width="" height="" alt="logo">
+			<img class="logo" usemap="#logo"  src="{{ url_for('static', filename='logo.jpg') }}" width="" height="" alt="logo">
 			<map name="logo">
-                <area shape="default" coords="20,0 ,270,0, 270,70, 20,70" alt="logo" href="index.html">
+                <area shape="default" coords="30,20 ,210,20, 210,90, 30,90" alt="logo" href="{{ url_for('index') }}">
             </map>
 
 			{% if user %}
@@ -29,14 +29,14 @@
                 </ul>
             </nav>
         {% endif %}
-	</header><!--End of header -->
-	<main><!--Start of main -->
-	<h1>Welcome {{user}} to Python Matrix Q&A Forum</h1>
+	</header>
+	<main>
+	<h1 class="welcome">Welcome {{user}} to Python Matrix Q&A Forum</h1>
 
         {% if(user) %}
-            <h2>Listing Posts</h2>
+            <h2 class="welcome2">Listing Posts</h2>
 
-            <table>
+          <!--<table>
               <tr>
                 <th>Title</th><br>
                 <th>Date</th>
@@ -51,9 +51,16 @@
 
               </tr>
               {% endfor %}
-            </table>
+            </table>-->
         {% endif %}
-	</main><!--End of main -->
+
+        {% for post in posts %}
+            <a class="a2" href="{{ url_for('get_post', post_id=post.id) }}"><b>{{post.title}}</b></a><br>
+            <div class="a2">Created on:{{post.date}}<br>View Count-{{ post.view_count }}<br>Created By-{{post.user.first_name}}</div> <br>
+
+
+	    {% endfor %}
+	</main>
 	<footer>
         <ul>
             <li>© Python Matrix</li>

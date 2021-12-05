@@ -35,15 +35,17 @@ class User(db.Model):
     email = db.Column("email", db.String(100))
     password = db.Column(db.String(255), nullable=False)
     registered_on = db.Column(db.DateTime, nullable=False)
+    is_dark = db.Column(db.Boolean(), nullable=False, default=False)
     posts = db.relationship("Post", backref="user", lazy=True)
     comments = db.relationship("Comment", backref="user", lazy=True)
 
-    def __init__(self, first_name, last_name, email, password):
+    def __init__(self, first_name, last_name, email, password, is_dark):
         self.first_name = first_name
         self.last_name = last_name
         self.email = email
         self.password = password
         self.registered_on = datetime.date.today()
+        self.is_dark = is_dark
 
 
 class Comment(db.Model):

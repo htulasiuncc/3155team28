@@ -46,9 +46,19 @@ def index():
         return render_template('index.html', user=session['user'], posts=my_posts)
     return render_template("index.html")
 
+
+@app.route('/myAccount')
+def myAccount():
+    my_posts = db.session.query(Post).all()
+    if session.get('user'):
+        return render_template('myAccount.html', user=session['user'], posts=my_posts)
+    return render_template("myAccount.html")
+
+
 @app.route('/contact')
 def contact():
     return render_template("contact.html")
+
 
 @app.route('/about')
 def about():

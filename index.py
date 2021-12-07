@@ -9,9 +9,10 @@ from flask import session
 import bcrypt
 from database import db
 from models import Post as Post
+from models import Report as Report
 from models import User as User
 from models import Comment as Comment
-from forms import RegisterForm, CommentForm
+from forms import RegisterForm, CommentForm, Theme
 from forms import LoginForm
 
 app = Flask(__name__)  # create an app
@@ -38,13 +39,26 @@ with app.app_context():
 # @app.route is a decorator. It gives the function "index" special powers.
 # In this case it makes it so anyone going to "your-url/" makes this function
 # get called. What it returns is what is shown as the web page
-@app.route('/')
-@app.route('/index')
+@app.route('/', methods=['GET', 'POST'])
+@app.route('/index', methods=['GET', 'POST'])
 def index():
     my_posts = db.session.query(Post).all()
+
     if session.get('user'):
-        return render_template('index.html', user=session['user'], posts=my_posts)
-    return render_template("index.html")
+        user = db.session.query(User).filter_by(id=session['user_id']).one()
+        form = Theme()
+        if form.validate_on_submit():
+            user.is_dark = not user.is_dark
+            db.session.add(user)
+            db.session.commit()
+        if user.is_dark:
+            css = url_for('static', filename='main_dark.css')
+        else:
+            css = url_for('static', filename='main.css')
+    # if session.get('user'):
+        return render_template('index.html', user=session['user'], posts=my_posts, form=form, css=css)
+
+    return render_template("index.html", css=url_for('static', filename='main.css'))
 
 
 @app.route('/myAccount')
@@ -57,20 +71,23 @@ def myAccount():
 
 @app.route('/contact')
 def contact():
-    return render_template("contact.html")
+    css = get_theme()
+    return render_template("contact.html", user=session['user'], css=css)
 
 
 @app.route('/about')
 def about():
-    return render_template("about.html")
+    css = get_theme()
+    return render_template("about.html", user=session['user'], css=css)
 
 
 @app.route('/viewPosts')
 def get_posts():
     if session.get('user'):
+        css = get_theme()
         # retrieve posts from database
         my_posts = db.session.query(Post).filter_by(user_id=session['user_id']).all()
-        return render_template('viewPosts.html', posts=my_posts, user=session['user'])
+        return render_template('viewPosts.html', posts=my_posts, user=session['user'], css=css)
     else:
         return redirect(url_for('login'))
 
@@ -78,6 +95,8 @@ def get_posts():
 @app.route('/viewPosts/<post_id>')
 def get_post(post_id):
     my_post = db.session.query(Post).filter_by(id=post_id).one()
+
+    css = get_theme()
 
     count = my_post.view_count
     my_post.view_count = count + 1
@@ -87,28 +106,31 @@ def get_post(post_id):
 
     # create a comment form object
     form = CommentForm()
-    return render_template('viewPost.html', post=my_post, user=session['user'], form=form)
+    return render_template('viewPost.html', post=my_post, user=session['user'], form=form, css=css)
 
 
 @app.route('/viewPosts/addPost', methods=['GET', 'POST'])
 def addPost():
     # print('request method is', request.method)
     if session.get('user'):
+        css = get_theme()
         if request.method == 'POST':
 
             title = request.form['title']
             text = request.form['postText']
+            img = request.form['img']
             count = 0
+            count_1 = 0
 
             from datetime import date
             today = date.today()
             today = today.strftime("%m-%d-%Y")
-            new_record = Post(title, text, today, count, session['user_id'])
+            new_record = Post(title, text, img, today, count, count_1, session['user_id'])
             db.session.add(new_record)
             db.session.commit()
             return redirect(url_for('get_posts'))
         else:
-            return render_template('addPost.html', user=session['user'])
+            return render_template('addPost.html', user=session['user'], css=css)
     else:
         # user is not in session, redirect to login
         return render_template(url_for('login'))
@@ -117,14 +139,17 @@ def addPost():
 @app.route('/viewPosts/edit/<post_id>', methods=['GET', 'POST'])
 def update_post(post_id):
     if session.get('user'):
+        css = get_theme()
         if request.method == 'POST':
             # get title data
             title = request.form['title']
             text = request.form['postText']
+            img = request.form['img']
             post = db.session.query(Post).filter_by(id=post_id).one()
 
             post.title = title
             post.text = text
+            post.img = img
 
             db.session.add(post)
             db.session.commit()
@@ -138,7 +163,7 @@ def update_post(post_id):
             # retrieve note from db
             my_post = db.session.query(Post).filter_by(id=post_id).one()
 
-            return render_template('addPost.html', post=my_post, user=session['user'])
+            return render_template('addPost.html', post=my_post, user=session['user'], css=css)
     else:
         return redirect(url_for('login'))
 
@@ -166,8 +191,9 @@ def register():
         # get entered user data
         first_name = request.form['firstname']
         last_name = request.form['lastname']
+        is_dark = False
         # create user model
-        new_user = User(first_name, last_name, request.form['email'], h_password)
+        new_user = User(first_name, last_name, request.form['email'], h_password, is_dark)
         # add user to database and commit
         db.session.add(new_user)
         db.session.commit()
@@ -230,6 +256,45 @@ def new_comment(post_id):
 
     else:
         return redirect(url_for('login'))
+
+
+@app.route('/viewPost/<post_id>/report', methods=['POST', 'GET'])
+def report_post(post_id):
+    if session.get('user'):
+        my_post = db.session.query(Post).filter_by(id=post_id).one()
+        css = get_theme()
+        count = my_post.report_count
+        my_post.report_count = count + 1
+        if my_post.report_count < 3:
+            if request.method == 'POST':
+
+                issue = request.form['issue']
+                content = request.form['content']
+                new_record = Report(issue, content, int(post_id), session['user_id'])
+                db.session.add(new_record)
+                db.session.commit()
+                count += 1
+                print(count)
+                return redirect(url_for('get_post', post_id=post_id))
+            else:
+                return render_template('report.html', user=session['user'], css=css)
+        else:
+            db.session.delete(my_post)
+            db.session.commit()
+            return redirect(url_for('index'))
+
+    else:
+        return redirect(url_for('login'))
+
+
+def get_theme():
+    user = db.session.query(User).filter_by(id=session['user_id']).one()
+    if user.is_dark:
+        css = url_for('static', filename='main_dark.css')
+    else:
+        css = url_for('static', filename='main.css')
+
+    return css
 
 
 app.run(host=os.getenv('IP', '127.0.0.1'), port=int(os.getenv('PORT', 5000)), debug=True)

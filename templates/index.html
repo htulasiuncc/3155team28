@@ -15,6 +15,13 @@
 			{% if user %}
             <nav>
                 <ul class="nav-links">
+                    <li><div class="form2">
+                        <form action="{{ url_for('index', css=css) }}" method="post">
+                        <div>
+                            {{ form.submit10 }}
+                        </div>
+                        </form>
+                    </div></li>
                     <li><a class="links" href="{{ url_for('get_posts') }}"> My Posts</a></li>
                     <li><a class="links" href="{{ url_for('myAccount') }}"> My Account</a></li>
                     <li><a class="links" href="{{ url_for('addPost') }}">Create</a></li>
@@ -34,17 +41,16 @@
 	<main>
 	<h1 class="welcome">Welcome {{user}} to Python Matrix Q&A Forum</h1>
         {% if user %}
-        <div class="form2">
-        <form action="{{ url_for('index', css=css) }}" method="post">
+<!--        <div class="form2">-->
+<!--        <form action="{{ url_for('index', css=css) }}" method="post">-->
 
-        <div>
-            {{ form.submit10 }}
-<!--                  <input class="submit3" type="submit" value="Submit" onsubmit="return checkForm(this);"-->
-<!-- />-->
-        </div>
+<!--        <div>-->
+<!--            {{ form.submit10 }}-->
 
-        </form>
-             </div>
+<!--        </div>-->
+
+<!--        </form>-->
+<!--             </div>-->
 
 
         {% endif %}

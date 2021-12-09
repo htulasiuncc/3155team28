@@ -262,6 +262,10 @@ img{
 }
 
 #submit10{
-    width: 120px;
-    margin-left: 150em;
+    width: 130px;
+    background-color: black;
+    color: white;
+    border: none;
+    font-size: 18px;
+    font-family:'Times New Roman', Times, serif;
 }

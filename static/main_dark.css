@@ -21,7 +21,7 @@ h1{
 
 nav ul li a button{
     font-family: Verdana, Geneva, Tahoma, sans-serif;
-    font-size: 1.1em;
+    font-size: 18px;
     text-decoration: none;
     color: white;
     padding: 10px 20px;
@@ -38,7 +38,7 @@ nav ul li a{
     text-decoration: none;
     justify-content:right;
     align-items: right;
-    font-size: 1.2em;
+    font-size: 18px;
 }
 
 nav links{
@@ -95,7 +95,7 @@ footer{
 
 footer ul li{
     align-items: flex-start;
-    font-size:1.1em;
+    font-size:18px;
     padding-left:20px;
     float:left;
     color:rgb(253, 250, 250);
@@ -103,7 +103,7 @@ footer ul li{
 
 footer ul li a{
     align-items: flex-start;
-    font-size:1.1em;
+    font-size:18px;
     padding-left:20px;
     float:left;
     color:rgb(250, 246, 246);
@@ -280,6 +280,10 @@ img{
 }
 
 #submit10{
-    width: 120px;
-    margin-left: 150em;
+    width: 130px;
+    background-color: black;
+    color: white;
+    border: white;
+    font-size: 18px;
+    font-family:'Times New Roman', Times, serif;
 }

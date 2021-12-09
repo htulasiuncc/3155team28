@@ -33,8 +33,8 @@
                         <label for="issue">Issue</label>
                         <input id="issue" type="text" name="issue" value= "{% if report %} {{report.issue}} {% endif %}"/>
                    </li><br><br>
-                    <li><label for="content">Content</label>
-                        <textarea id="content" name="content"  rows="6" cols="35" >{% if report %}{{report.content}}{% else %}Content{% endif %}</textarea>
+                    <li><label for="content">Reason</label>
+                        <textarea id="content" name="content"  rows="6" cols="35" >{% if report %}{{report.content}}{% else %}Reason{% endif %}</textarea>
                     </li><br><br>
                     <li>
                             <input class="submit1" type="submit" value="Submit Report"/>

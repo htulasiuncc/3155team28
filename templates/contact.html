@@ -15,7 +15,6 @@
 				<ul class="nav-links">
 					{% if user %}
 					<li><a href="{{ url_for('index') }}">Home</a></li>
-<!--                    <li><a href="{{ url_for('addPost') }}">Create</a></li>-->
 					{% else %}
 					<li><a class="links" href="{{ url_for('login') }}"><button>Login</button></a></li>
 					<li><a class="links" href="{{ url_for('register') }}"><button>Register</button></a></li>

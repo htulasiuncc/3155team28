@@ -4,6 +4,7 @@
 	<meta charset="UTF-8">
 	<title>Python Matrix</title>
 	<link rel="stylesheet" href="{{ css }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='forms.css') }}">
 </head><!--End of head element -->
 <body>
 	<header><!--Start of header -->
@@ -14,17 +15,16 @@
 		<nav>
             <ul class="nav-links">
                 <li><a class="links" href="{{ url_for('index')}}">Home</a></li>
+                <li><a class="links" href="{{ url_for('myAccount') }}"> My Account</a></li>
                 <li><a class="links" href="{{ url_for('get_posts')}}">My Posts</a></li>
-                <li><a class="links" href="{{ url_for('addPost')}}">Create</a></li>
+                <li><a class="links" href="{{ url_for('addPost')}}">Create Post</a></li>
                 <li><a class="links" href="{{ url_for('logout') }}">Logout</a></li>
             </ul>
         </nav>
+    </header>
 
 
-	</header>
-
-
-        <h1 class="welcome" >Welcome {{user}} to Python Matrix Q&A Forum</h1>
+<!--        <h1 class="welcome" >Welcome {{user}} to Python Matrix Q&A Forum</h1>-->
 
         <form class="form1" action="report" method="post">
 

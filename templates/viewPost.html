@@ -14,13 +14,14 @@
          <nav>
             <ul class="nav-links">
                <li><a href="{{ url_for('index') }}">Home</a></li>
-                    <li><a href="{{ url_for('addPost') }}">Create</a></li>
+                <li><a class="links" href="{{ url_for('myAccount') }}"> My Account</a></li>
+                    <li><a href="{{ url_for('addPost') }}">Create Post</a></li>
                <li><a href="{{ url_for('logout') }}">Logout</a></li>
             </ul>
          </nav>
    </header><!--End of header -->
 
-   <h1 class="welcome">Welcome {{user}} to Python Matrix Q&A Forum</h1>
+<!--   <h1 class="welcome">Welcome {{user}} to Python Matrix Q&A Forum</h1>-->
       <h2 class="welcome2">Listing Posts</h2>
       <!--<table>
             <tr>
@@ -38,9 +39,12 @@
         <div class="a2" text-align="center"><b>Title:</b> {{post.title}}</div><br>
         <div class="a2"><b>Content:</b> {{post.text}}</div><br>
         <div class="a2"><b>Created on:</b> {{post.date}}</div><br>
-            <tr>
+<!--            <tr>-->
+<!--                {% if post.img != "Add Image" %}-->
                 <img src="{{ post.img }}" class = "img">
-            </tr>
+
+<!--                {% endif %}-->
+<!--            </tr>-->
         {% if post.comments %}
   {% if post.comments|length > 0 %}
     <h2 class="welcome2">Comments</h2>

@@ -208,6 +208,14 @@ form ul li label{
     margin-left: 2em;
 }
 
+
+.welcome3{
+    font-size: 30px;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    text-align: center;
+}
+
+
 .a2{
     text-decoration: none;
     font-size:20px;
@@ -238,11 +246,12 @@ img{
 }
 
 #editButton{
-    background-color: #616296;
+    background-color: Silver;
 }
 
 #deleteButton{
-    background-color: #f45236;
+    background-color: silver;
+
     margin-left: 1em;
     margin-top:0.5em;
 }
@@ -269,3 +278,11 @@ img{
     font-size: 18px;
     font-family:'Times New Roman', Times, serif;
 }
+
+#editAccountButton{
+    background-color: Blue;
+    color: White;
+    height: 120%;
+    font-size: 18px;
+}
+

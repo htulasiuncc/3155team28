@@ -16,7 +16,8 @@
             <ul class="nav-links">
                 <li><a class="links" href="{{ url_for('index')}}">Home</a></li>
                 <li><a class="links" href="{{ url_for('get_posts')}}">My Posts</a></li>
-                <li><a class="links" href="{{ url_for('addPost')}}">Create</a></li>
+                <li><a class="links" href="{{ url_for('myAccount') }}"> My Account</a></li>
+                <li><a class="links" href="{{ url_for('addPost')}}">Create Post</a></li>
                 <li><a class="links" href="{{ url_for('logout') }}">Logout</a></li>
             </ul>
         </nav>
@@ -25,7 +26,7 @@
 	</header>
 
 
-        <h1 class="welcome">Welcome {{user}} to Python Matrix Q&A Forum</h1>
+<!--        <h1 class="welcome">Welcome {{user}} to Python Matrix Q&A Forum</h1>-->
         {% if post %}
         <form class="form1" action="{{url_for('update_post', post_id=post.id) }}" method="post">
         {% else %}
@@ -33,7 +34,7 @@
         {% endif %}
                 <ul>
                    <li>
-                       <label for="'title">Title</label>
+                       <label for="title">Title</label>
                         <input id="title" type="text" name="title" value= "{% if post %} {{post.title}} {% endif %}"/>
                    </li><br><br>
                     <li><label for="content">Content</label>

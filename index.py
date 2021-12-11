@@ -56,17 +56,21 @@ def index():
         else:
             css = url_for('static', filename='main.css')
     # if session.get('user'):
-        return render_template('index.html', user=session['user'], posts=my_posts, form=form, css=css)
+    #     return render_template('index.html', user=session['user'], posts=my_posts, form=form, css=css)
+        return render_template('index.html', user1=user, user=session['user'], posts=my_posts, form=form, css=css)
 
     return render_template("index.html", css=url_for('static', filename='main.css'))
 
 
 @app.route('/myAccount')
 def myAccount():
-    my_posts = db.session.query(Post).all()
     if session.get('user'):
-        return render_template('myAccount.html', user=session['user'], posts=my_posts)
-    return render_template("myAccount.html")
+        css =get_theme()
+        my_user = db.session.query(User).filter_by(id=session['user_id']).one()
+        my_postz = db.session.query(Post).filter_by(user_id=session['user_id']).all()
+        return render_template('myAccount.html', user=my_user, numposts=len(my_postz), css=css)
+    else:
+        return redirect(url_for("login.html"))
 
 
 @app.route('/contact')
@@ -79,6 +83,36 @@ def contact():
 def about():
     css = get_theme()
     return render_template("about.html", user=session['user'], css=css)
+
+
+@app.route('/myAccount/editAccount/', methods=['GET', 'POST'])
+def edit_account():
+    if session.get('user'):
+        css = get_theme()
+        if request.method == 'POST':
+            # get title data
+            first_name = request.form['firstname']
+            last_name = request.form['lastname']
+            user = db.session.query(User).filter_by(id=session.get('user_id')).one()
+
+            user.first_name = first_name
+            user.last_name = last_name
+
+            db.session.add(user)
+            db.session.commit()
+
+            return redirect(url_for('myAccount'))
+
+        else:
+            # GET request - show new note form to edit note
+            # retrieve user from db
+
+            # retrieve note from db
+            my_user = db.session.query(User).filter_by(id=session.get('user_id')).one()
+
+            return render_template('editAccount.html', user1=my_user, user=session['user'], css=css)
+    else:
+        return redirect(url_for('login'))
 
 
 @app.route('/viewPosts')
@@ -119,6 +153,9 @@ def addPost():
             title = request.form['title']
             text = request.form['postText']
             img = request.form['img']
+            # print(img)
+            # if img == "Add Image":
+            #     img = "/static/logo.jpg"
             count = 0
             count_1 = 0
 

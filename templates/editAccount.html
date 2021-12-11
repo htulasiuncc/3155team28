@@ -3,7 +3,8 @@
 <head><!--Start of head element -->
 	<meta charset="UTF-8">
 	<title>Python Matrix</title>
-	<link rel="stylesheet" href="{{ css }}" id="stylesheet">
+	<link rel="stylesheet" href="{{ css }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='forms.css') }}">
 </head><!--End of head element -->
 <body>
 	<header><!--Start of header -->
@@ -11,17 +12,10 @@
 			<map name="logo">
                 <area shape="default" coords="30,20 ,210,20, 210,90, 30,90" alt="logo" href="{{ url_for('index') }}">
             </map>
-
-			{% if user %}
+        {% if user %}
             <nav>
                 <ul class="nav-links">
-                    <li><div class="form2">
-                        <form action="{{ url_for('index', css=css) }}" method="post">
-                        <div>
-                            {{ form.submit10 }}
-                        </div>
-                        </form>
-                    </div></li>
+                    <li><a href="{{ url_for('index') }}">Home</a></li>
                     <li><a class="links" href="{{ url_for('get_posts') }}"> My Posts</a></li>
                     <li><a class="links" href="{{ url_for('myAccount') }}"> My Account</a></li>
                     <li><a class="links" href="{{ url_for('addPost') }}">Create Post</a></li>
@@ -37,37 +31,36 @@
                 </ul>
             </nav>
         {% endif %}
-	</header>
-	<main>
-	<h1 class="welcome">Welcome {{user1.first_name}} to Python Matrix Q&A Forum</h1>
-        {% if user %}
-<!--        <div class="form2">-->
-<!--        <form action="{{ url_for('index', css=css) }}" method="post">-->
-
-<!--        <div>-->
-<!--            {{ form.submit10 }}-->
-
-<!--        </div>-->
-
-<!--        </form>-->
-<!--             </div>-->
-
-
-        {% endif %}
-
-        {% if(user) %}
-            <h2 class="welcome2">Listing Posts</h2>
-        {% endif %}
+	</header><!--End of header -->
+	<main><!--Start of main -->
+<!--	<h1 class="welcome">Welcome {{user1.first_name}} to Python Matrix Q&A Forum</h1>-->
 
 
 
-        {% for post in posts %}
-            <a class="a2" href="{{ url_for('get_post', post_id=post.id) }}"><b>{{post.title}}</b></a><br>
-            <div class="a2">Created on:{{post.date}}<br>View Count-{{ post.view_count }}<br>Created By-{{post.user.first_name}}</div> <br>
+
+        <form class="form1" action="{{ url_for('edit_account') }}" method="post">
+            <label for="firstname">First Name</label>
+            <input id="firstname" type="text" name="firstname" value= "{{user1.first_name}}"/>
+            <br><br>
+            <label for="lastname">Last Name</label>
+            <input id="lastname" type="text" name="lastname"  value="{{user1.last_name}}"/>
+            <br><br>
+            <input class="submit1" type="submit" value="Update Account"/>
+        </form>
 
 
-	    {% endfor %}
-	</main>
+
+
+
+
+
+
+
+
+
+
+
+	</main><!--End of main -->
 	<footer>
         <ul>
             <li>© Python Matrix</li>

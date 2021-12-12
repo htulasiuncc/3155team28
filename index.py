@@ -55,8 +55,8 @@ def index():
             css = url_for('static', filename='main_dark.css')
         else:
             css = url_for('static', filename='main.css')
-    # if session.get('user'):
-    #     return render_template('index.html', user=session['user'], posts=my_posts, form=form, css=css)
+        # if session.get('user'):
+        #     return render_template('index.html', user=session['user'], posts=my_posts, form=form, css=css)
         return render_template('index.html', user1=user, user=session['user'], posts=my_posts, form=form, css=css)
 
     return render_template("index.html", css=url_for('static', filename='main.css'))
@@ -65,7 +65,7 @@ def index():
 @app.route('/myAccount')
 def myAccount():
     if session.get('user'):
-        css =get_theme()
+        css = get_theme()
         my_user = db.session.query(User).filter_by(id=session['user_id']).one()
         my_postz = db.session.query(Post).filter_by(user_id=session['user_id']).all()
         return render_template('myAccount.html', user=my_user, numposts=len(my_postz), css=css)

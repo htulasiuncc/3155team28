@@ -39,8 +39,10 @@
         {% endif %}
 	</header>
 	<main>
-	<h1 class="welcome">Welcome {{user1.first_name}} to Python Matrix Q&A Forum</h1>
+        <h1 class="welcome">Welcome {% if user %}{{ user1.first_name }}{% endif %} to the Python Matrix Posts App!</h1>
+
         {% if user %}
+
 <!--        <div class="form2">-->
 <!--        <form action="{{ url_for('index', css=css) }}" method="post">-->
 
